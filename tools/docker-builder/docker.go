@@ -80,6 +80,12 @@ func runDocker(args Args) error {
 		return err
 	}
 
+	fmt.Println("Arijit Bakefile details")
+
+	for k, v := range tarFiles {
+		fmt.Println("Key=" + k + ", val=" + v)
+	}
+
 	makeStart := time.Now()
 	for _, arch := range args.Architectures {
 		if err := RunMake(context.Background(), args, arch, args.PlanFor(arch).Targets()...); err != nil {
@@ -149,8 +155,16 @@ func RunBake(args Args) error {
 	if err := createBuildxBuilderIfNeeded(args); err != nil {
 		return err
 	}
+	fmt.Println("Arijit::::::::>>>>>>")
+	data, err := os.ReadFile(out)
+	if err != nil {
+		fmt.Println("Arijit  NOt able to read ", out)
+	} else {
+		fmt.Println(">>>>> ", string(data))
+	}
 	c := VerboseCommand("docker", "buildx", "bake", "-f", out, "all")
 	c.Stdout = os.Stdout
+	fmt.Println("Arijit : Running Command---->", c.String())
 	return c.Run()
 }
 

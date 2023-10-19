@@ -88,8 +88,12 @@ function may_copy_into_arch_named_sub_dir() {
     chmod a+r "${out}"
   fi
 }
-
+ls -l /var/run/docker.sock
 mkdir -p "${DOCKER_WORKING_DIR}"
 for FILE in "${FILES[@]}"; do
+  echo "Doooooing the copy of ${FILE}"
+  r=$(whoami)
+  id=$(id -u)
+  echo "Running as ${r} with ${id}"
   may_copy_into_arch_named_sub_dir "${FILE}"
 done

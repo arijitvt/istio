@@ -22,11 +22,15 @@ set -eu
 # Speed up builds when using recent CPUs
 export GGCR_EXPERIMENT_SHA256_SIMD=1
 
+echo "Local out is >>>>>>> ${LOCAL_OUT}"
+
 if [[ -f ${LOCAL_OUT}/docker-builder ]]; then
   CURRENT_BUILD="$(./common/scripts/report_build_info.sh | grep buildGitRevision | cut -d= -f2)"
   PREBUILT="$(${LOCAL_OUT}/docker-builder --version)"
   CODE_CHG="$(git diff HEAD -- ./tools/docker-builder)"
+  echo ">>>>>>>>Current build = ${CURRENT_BUILD} and Pre built=${PREBUILT}"
   if [[ "${CURRENT_BUILD}" != "${PREBUILT}" ]] || [[ -n "${CODE_CHG}" ]]; then
+    echo "Docker building region section........."
     GOOS=${LOCAL_GO_OS} GOARCH=${LOCAL_GO_ARCH} ./common/scripts/gobuild.sh ${LOCAL_OUT}/docker-builder ./tools/docker-builder
   fi
 else

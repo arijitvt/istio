@@ -35,6 +35,7 @@ import (
 )
 
 func main() {
+	fmt.Println("This is after Arijit changed how the istio works")
 	rootCmd.Flags().StringSliceVar(&globalArgs.Hubs, "hub", globalArgs.Hubs, "docker hub(s)")
 	rootCmd.Flags().StringSliceVar(&globalArgs.Tags, "tag", globalArgs.Tags, "docker tag(s)")
 
